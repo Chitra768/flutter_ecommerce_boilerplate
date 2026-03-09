@@ -234,28 +234,6 @@ In **`lib/core/routes/app_pages.dart`**, add a `GetPage` for the profile route a
 
 ---
 
-## Possible Extensions
-
-You can add:
-
-- Authentication (login/signup)
-- Payment (Stripe, Razorpay, etc.)
-- Push notifications
-- Analytics
-- Product reviews and ratings
-- User profile and settings
-
----
-
-## Pushing Changes to GitHub
-
-```bash
-git add .
-git commit -m "Your commit message"
-git push
-```
-
----
 
 ## License
 
