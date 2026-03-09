@@ -1,133 +1,87 @@
-Flutter E-Commerce Boilerplate (GetX)
+# Flutter E-Commerce Boilerplate (GetX)
 
-A production-ready Flutter e-commerce starter boilerplate built with Flutter and GetX.
+**A production-ready Flutter e-commerce starter built with Flutter and GetX.**
 
-This project provides a clean architecture, modular folder structure, reusable widgets, and scalable state management, making it suitable for both beginners learning Flutter architecture and experienced developers building production apps.
+This boilerplate gives you a clean architecture, modular folder structure, reusable widgets, and scalable state management. It works for both beginners learning Flutter and experienced developers shipping production apps. The goal is to cut development time by providing a solid base for e-commerce applications.
 
-The goal of this boilerplate is to reduce development time by providing a solid starting point for e-commerce applications.
+---
 
-Key Features 🚀
-Clean Architecture
+## Key Features
 
-The project follows a layered architecture separating:
+### Clean Architecture
 
-Core layer → shared configurations and utilities
+The project uses a layered architecture:
 
-Data layer → API providers and repositories
+| Layer | Purpose |
+|-------|---------|
+| **Core** | Shared config, routes, theme |
+| **Data** | API providers and data sources |
+| **Domain** | Models and repositories |
+| **Presentation** | UI, controllers, bindings |
 
-Domain layer → business models and entities
+This keeps the codebase maintainable, scalable, and testable.
 
-Presentation layer → UI and controllers
+### GetX State Management
 
-This ensures the codebase remains maintainable, scalable, and testable.
+GetX is used for:
 
-GetX State Management
+- **State management** — reactive updates with `Obx`, `GetBuilder`, `GetView`
+- **Dependency injection** — `Get.put`, `Get.lazyPut`, bindings
+- **Route management** — named routes and transitions
 
-The project uses GetX for:
+### Global App Services
 
-State management
+App-wide state is handled by services that extend **GetxService**:
 
-Dependency injection
+- **CartService** — cart items across the app
+- **WishlistService** — favorite products
 
-Route management
+They stay available for the whole app lifecycle.
 
-Reactive UI updates are handled with Obx, GetBuilder, and GetView.
+---
 
-Global App Services
+## Application Modules
 
-Global services allow app-wide state management:
+| Module | Description |
+|--------|-------------|
+| **Home / Product listing** | Product grid, category filters, pull-to-refresh |
+| **Product details** | Image, description, price, add to cart, wishlist toggle |
+| **Cart** | View items, change quantity, remove items |
+| **Wishlist** | Add/remove favorites, view saved products |
+| **Checkout** | Simple checkout and order confirmation |
+| **Order history** | List of past orders |
 
-CartService → manages cart items globally
+---
 
-WishlistService → manages favorite products
+## API Integration
 
-These services extend GetxService and remain available throughout the app lifecycle.
+- **Default API:** [Fake Store API](https://fakestoreapi.com/products) (products + categories).
+- **Fallback:** If the network fails (e.g. emulator DNS), the app uses bundled mock product data so it still runs offline.
 
-Application Modules 📦
+**API code:** `lib/data/providers/api_provider.dart`
 
-The boilerplate includes essential e-commerce modules:
+**To use your own backend:**
 
-Home / Product Listing
+1. Change the base URL in **ApiProvider**.
+2. Adjust **Product.fromJson** in `lib/domain/models/product_model.dart` if your API shape differs.
+3. Update repository methods if needed.
 
-Displays product list
+---
 
-Category filtering
+## Folder Structure
 
-Grid layout
-
-Pull-to-refresh support
-
-Product Details
-
-Product images
-
-Description
-
-Price
-
-Add to cart
-
-Wishlist toggle
-
-Cart
-
-View cart items
-
-Update product quantity
-
-Remove items
-
-Wishlist
-
-Add/remove favorite products
-
-View saved products
-
-Checkout
-
-Simple checkout flow
-
-Order confirmation
-
-Order History
-
-Displays previously placed orders
-
-API Integration 🌐
-
-The project includes a structured API provider.
-
-Dummy product data is fetched from:
-
-https://fakestoreapi.com/products
-
-API logic is implemented in:
-
-data/providers/api_provider.dart
-
-To connect your own backend:
-
-Replace the API base URL.
-
-Adjust ProductModel.fromJson.
-
-Update repository methods if needed.
-
-Folder Structure 📁
+```
 lib/
-├── core/                   
-│   ├── constants/          # App constants
-│   ├── routes/             # GetX route definitions
-│   └── theme/              # Global theme configuration
-│
-├── data/                   
-│   └── providers/          # API providers
-│
-├── domain/                 
-│   ├── models/             # Data models
-│   └── repositories/       # Repository layer
-│
-├── presentation/           
+├── core/
+│   ├── routes/          # GetX routes (app_pages.dart, app_routes.dart)
+│   └── theme/           # App theme and colors
+├── data/
+│   ├── mock/            # Fallback mock product data
+│   └── providers/       # API provider
+├── domain/
+│   ├── models/          # Product, CartItem, etc.
+│   └── repositories/    # ProductRepository
+├── presentation/
 │   ├── cart/
 │   ├── checkout/
 │   ├── home/
@@ -135,149 +89,174 @@ lib/
 │   ├── product_details/
 │   ├── splash/
 │   └── wishlist/
-│
-├── services/               # Global services
-│
-├── widgets/                # Reusable UI components
-│
-└── main.dart               # App entry point
-Reusable UI Components 🎨
+├── services/            # CartService, WishlistService
+├── widgets/             # Reusable UI components
+└── main.dart
+```
 
-The project contains reusable widgets to speed up development:
+Each feature under **presentation** uses: `bindings/`, `controllers/`, `views/`.
 
-ProductCard
+---
 
-CustomButton
+## Reusable UI Components
 
-EmptyState
+| Widget | Use |
+|--------|-----|
+| **ProductCard** | Product grid item (image, title, price, actions) |
+| **CustomButton** | Primary/secondary buttons |
+| **EmptyState** | Empty cart, empty wishlist, no products |
 
-LoadingWidget
+These keep the UI consistent across screens.
 
-SearchBar
+---
 
-These components ensure consistent UI design across the app.
+## Theme Configuration
 
-Theme Configuration 🎨
+Theming is in **`lib/core/theme/`**:
 
-Global theming is handled inside:
+- **app_theme.dart** — light/dark theme, typography, button styles
+- **app_colors.dart** — primary, background, text colors
 
-core/theme/app_theme.dart
+Edit these to match your brand.
 
-You can configure:
+---
 
-Colors
+## Getting Started
 
-Typography
+### 1. Clone the repository
 
-Button styles
+```bash
+git clone https://github.com/Chitra768/flutter_ecommerce_boilerplate.git
+```
 
-Global UI styling
+### 2. Open the project
 
-Getting Started 🛠️
-1. Clone the repository
-git clone <your-repository-url>
-2. Navigate to project folder
+```bash
 cd flutter_ecommerce_boilerplate
-3. Install dependencies
+```
+
+### 3. Install dependencies
+
+```bash
 flutter pub get
-4. Run the application
+```
+
+### 4. Run the app
+
+```bash
 flutter run
-Required Dependencies
+```
 
-Main packages used:
+To run on a specific device (e.g. Android emulator):
 
-get
+```bash
+flutter devices
+flutter run -d <device_id>
+```
 
-http
+---
 
-cached_network_image
+## Dependencies
 
-You can find all dependencies in:
+Main packages (see **pubspec.yaml** for full list):
 
-pubspec.yaml
-Adding a New Module
+- **get** — state management, routing, DI
+- **http** — API calls
+- **cached_network_image** — image caching
+- **shared_preferences** — local persistence
+- **flutter_svg** — SVG support
 
-To create a new feature module (example: Profile module):
+---
 
-Step 1: Create folder
+## Adding a New Module
+
+Example: adding a **Profile** feature.
+
+**Step 1 — Folder structure**
+
+```
 lib/presentation/profile/
+├── bindings/
+├── controllers/
+└── views/
+```
 
-Structure:
+**Step 2 — Controller** (`profile_controller.dart`)
 
-profile/
- ├── bindings/
- ├── controllers/
- └── views/
-Step 2: Create Controller
+```dart
 class ProfileController extends GetxController {
+  // your logic
 }
-Step 3: Create Binding
+```
+
+**Step 3 — Binding** (`profile_binding.dart`)
+
+```dart
 class ProfileBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ProfileController());
   }
 }
-Step 4: Create View
+```
+
+**Step 4 — View** (`profile_view.dart`)
+
+```dart
 class ProfileView extends GetView<ProfileController> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(/* ... */);
+  }
 }
-Step 5: Register Route
+```
 
-Add route inside:
+**Step 5 — Route**
 
-core/routes/app_pages.dart
-Best Practices Included
+In **`lib/core/routes/app_pages.dart`**, add a `GetPage` for the profile route and register it in **`app_routes.dart`**.
 
-This boilerplate follows best practices:
+---
 
-Feature-based architecture
+## Best Practices in This Boilerplate
 
-Separation of concerns
+- **Feature-based structure** — one folder per feature (cart, wishlist, etc.)
+- **Separation of concerns** — data / domain / presentation
+- **Reusable widgets** — shared components in `lib/widgets/`
+- **Global services** — cart and wishlist as GetxServices
+- **Structured API layer** — provider + repository pattern
 
-Reusable UI components
+---
 
-Global services for shared state
+## Who Is This For?
 
-Clean API structure
+- **Beginners** — learn clean architecture and GetX with a real app structure.
+- **Experienced devs** — use as a production-ready e-commerce starter and extend modules as needed.
 
-Beginner-friendly code comments
+---
 
-Who Is This For?
+## Possible Extensions
 
-This boilerplate is designed for:
+You can add:
 
-Beginner Flutter Developers
+- Authentication (login/signup)
+- Payment (Stripe, Razorpay, etc.)
+- Push notifications
+- Analytics
+- Product reviews and ratings
+- User profile and settings
 
-Learn clean architecture
+---
 
-Understand GetX structure
+## Pushing Changes to GitHub
 
-Practice scalable project organization
+```bash
+git add .
+git commit -m "Your commit message"
+git push
+```
 
-Experienced Developers
+---
 
-Start projects faster
-
-Use as production starter template
-
-Extend modules easily
-
-Future Improvements (Optional)
-
-You can extend this boilerplate with:
-
-Authentication system
-
-Payment integration
-
-Push notifications
-
-Analytics
-
-Product reviews
-
-User profile module
-
-License
+## License
 
 This project can be used as a starter template for Flutter e-commerce applications.
